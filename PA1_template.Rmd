@@ -8,34 +8,34 @@ output:
 
 ## Loading and preprocessing the data
 
-1. Load the data to dat
+- 1.Load the data to dat
 
 ```{R echo=TRUE}
 dat <- read.csv("activity.csv")
 ```
 
-2. The format of dat is `r class(dat)`
+- 2.The format of dat is **`r class(dat)`**
 
 ## What is mean total number of steps taken per day?
 
-1. Calculate the total number of steps taken per day
+- 1.Calculate the total number of steps taken per day
 
 ```{R echo=TRUE}
 steps_day <- tapply(dat$steps,dat$date,sum,na.rm=TRUE)
 ```
 
-2. Make a histogram of the total number of steps taken each day
+- 2.Make a histogram of the total number of steps taken each day
 
 ```{R echo=TRUE}
 hist(steps_day, breaks = 20, main = "Histogram of the total number of steps taken each day", xlab = "Total number of steps", ylab = "Number of days")
 ```
 
-3. Of the total number of steps taken per day, the _mean_ is **`r mean(steps_day)`**
+- 3.Of the total number of steps taken per day, the _mean_ is **`r mean(steps_day)`**
 and the _median_ is **`r median(steps_day)`**
 
 ## What is the average daily activity pattern?
 
-1. Make a time series plot of the 5-minute interval(x-axis) and the average number of steps
+- 1.Make a time series plot of the 5-minute interval(x-axis) and the average number of steps
 taken, averaged across all days(y-axis)
 
 ```{R echo=TRUE}
@@ -43,17 +43,19 @@ steps_interval <- tapply(dat$steps,dat$interval,mean,na.rm=TRUE)
 plot(steps_interval, type = "l", xlab = "Interval", ylab = "Average number of steps")
 ```
 
-2. The No.**`r which.max(steps_interval)`** 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps.
+- 2.The No.**`r which.max(steps_interval)`** 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps.
 
 ## Imputing missing values
 
 Note that there are a number of days/intervals where there are missing values (coded as 𝙽𝙰). The presence of missing days may introduce bias into some calculations or summaries of the data.
 
-1. The _tatal number_ of mission values in the dataset is **`r sum(is.na(dat$steps))`**
+- 1.The _tatal number_ of mission values in the dataset is **`r sum(is.na(dat$steps))`**
 
-2. Devise a strategy for filling in all of the missing values in the dataset. The strategy does not need to be sophisticated. For example, you could use the mean/median for that day, or the mean for that 5-minute interval, etc.
+- 2.Devise a strategy for filling in all of the missing values in the dataset. The strategy does not need to be sophisticated. For example, you could use the mean/median for that day, or the mean for that 5-minute interval, etc.
 
-3. Create a new dataset that is equal to the original dataset but with the missing data filled in.
+  **I use the mean for that 5-minute interval to fill that interval which is missing values**
+  
+- 3.Create a new dataset that is equal to the original dataset but with the missing data filled in.
 
 ```{R echo=TRUE}
 loc <- is.na(dat$steps)
@@ -62,22 +64,22 @@ dat_new <- dat
 dat_new$steps[loc] <- steps_interval[as.character(intval_loc)]
 ```
 
-4. Make a histogram of the total number of steps taken each day and Calculate and report the mean and median total number of steps taken per day. Do these values differ from the estimates from the first part of the assignment? What is the impact of imputing missing data on the estimates of the total daily number of steps?
+- 4.Make a histogram of the total number of steps taken each day and Calculate and report the mean and median total number of steps taken per day. Do these values differ from the estimates from the first part of the assignment? What is the impact of imputing missing data on the estimates of the total daily number of steps?
 
 ```{R echo=TRUE}
 steps_day_new <- tapply(dat_new$steps,dat_new$date,sum,na.rm=TRUE)
 hist(steps_day_new, breaks = 20, main = "Histogram of the total number of steps taken each day", xlab = "Total number of steps", ylab = "Number of days")
 ```
 
-Of the total number of steps taken per day, the _mean_ is **`r mean(steps_day_new)`** and the _average_ is **`r median(steps_day_new)`**.
+Of the total number of steps taken per day, the _mean_ is **`r mean(steps_day_new)`** and the _median_ is **`r median(steps_day_new)`**.
 
-Obviously, the mean and average total numbers of steps taken per day is lager than befor.
+Obviously, the mean and average total numbers of steps taken per day is **lager** than befor.
 
 ## Are there differences in activity patterns between weekdays and weekends?
 
 For this part the weekdays() function may be of some help here. Use the dataset with the filled-in missing values for this part.
 
-1. Create a new factor variable in the dataset with two levels – “weekday” and “weekend” indicating whether a given date is a weekday or weekend day.
+- 1.Create a new factor variable in the dataset with two levels – “weekday” and “weekend” indicating whether a given date is a weekday or weekend day.
 
 ```{R echo=TRUE}
 library(timeDate)
@@ -87,7 +89,7 @@ dat_new <- data.frame(dat_new, week = wdlev[1])
 dat_new$week[(wd=="Sat"|wd=="Sun")] <- wdlev[2]
 ```
 
-2. Make a panel plot containing a time series plot (i.e. 𝚝𝚢𝚙𝚎 = "𝚕") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all weekday days or weekend days (y-axis). See the README file in the GitHub repository to see an example of what this plot should look like using simulated data.
+- 2.Make a panel plot containing a time series plot (i.e. 𝚝𝚢𝚙𝚎 = "𝚕") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all weekday days or weekend days (y-axis). See the README file in the GitHub repository to see an example of what this plot should look like using simulated data.
 
 ```{R echo=TRUE}
 library(dplyr)
