@@ -82,7 +82,7 @@ Obviously, the mean and average total numbers of steps taken per day is lager th
 
 ## Are there differences in activity patterns between weekdays and weekends?
 
-For this part the 𝚠𝚎𝚎𝚔𝚍𝚊𝚢𝚜() function may be of some help here. Use the dataset with the filled-in missing values for this part.
+For this part the weekdays() function may be of some help here. Use the dataset with the filled-in missing values for this part.
 
 1. Create a new factor variable in the dataset with two levels – “weekday” and “weekend” indicating whether a given date is a weekday or weekend day.
 
