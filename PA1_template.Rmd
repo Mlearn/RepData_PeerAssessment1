@@ -14,7 +14,13 @@ output:
 dat <- read.csv("activity.csv")
 ```
 
-- 2.The format of dat is **`r class(dat)`**
+- 2.Process/transform the data (if necessary) into a format suitable for your analysis
+
+```{R echo=TRUE}
+class(dat)
+```
+
+The format of dat is **`r class(dat)`**
 
 ## What is mean total number of steps taken per day?
 
@@ -30,7 +36,16 @@ steps_day <- tapply(dat$steps,dat$date,sum,na.rm=TRUE)
 hist(steps_day, breaks = 20, main = "Histogram of the total number of steps taken each day", xlab = "Total number of steps", ylab = "Number of days")
 ```
 
-- 3.Of the total number of steps taken per day, the _mean_ is **`r mean(steps_day)`**
+- 3.Calculate and report the mean and median of the total number of steps taken per day
+
+```{R echo=TRUE}
+mean(steps_day)
+```
+
+```{R echo=TRUE}
+median(steps_day)
+```
+Of the total number of steps taken per day, the _mean_ is **`r mean(steps_day)`**
 and the _median_ is **`r median(steps_day)`**
 
 ## What is the average daily activity pattern?
@@ -43,13 +58,25 @@ steps_interval <- tapply(dat$steps,dat$interval,mean,na.rm=TRUE)
 plot(steps_interval, type = "l", xlab = "Interval", ylab = "Average number of steps")
 ```
 
-- 2.The No.**`r which.max(steps_interval)`** 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps.
+- 2.Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?
+
+```{R echo=TRUE}
+which.max(steps_interval)
+```
+
+The No.**`r which.max(steps_interval)`** 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps.
 
 ## Imputing missing values
 
 Note that there are a number of days/intervals where there are missing values (coded as 𝙽𝙰). The presence of missing days may introduce bias into some calculations or summaries of the data.
 
-- 1.The _tatal number_ of mission values in the dataset is **`r sum(is.na(dat$steps))`**
+- 1.Calculate the total number of steps taken per day
+
+```{R echo=TRUE}
+sum(is.na(dat$steps))
+```
+
+The _tatal number_ of mission values in the dataset is **`r sum(is.na(dat$steps))`**
 
 - 2.Devise a strategy for filling in all of the missing values in the dataset. The strategy does not need to be sophisticated. For example, you could use the mean/median for that day, or the mean for that 5-minute interval, etc.
 
@@ -71,9 +98,17 @@ steps_day_new <- tapply(dat_new$steps,dat_new$date,sum,na.rm=TRUE)
 hist(steps_day_new, breaks = 20, main = "Histogram of the total number of steps taken each day", xlab = "Total number of steps", ylab = "Number of days")
 ```
 
+```{R echo=TRUE}
+mean(steps_day_new)
+```
+
+```{R echo=TRUE}
+median(steps_day_new)
+```
+
 Of the total number of steps taken per day, the _mean_ is **`r mean(steps_day_new)`** and the _median_ is **`r median(steps_day_new)`**.
 
-Obviously, the mean and average total numbers of steps taken per day is **lager** than befor.
+Obviously, the mean and average total numbers of steps taken per day is **a little lager** than befor.
 
 ## Are there differences in activity patterns between weekdays and weekends?
 

@@ -10,7 +10,18 @@
 dat <- read.csv("activity.csv")
 ```
 
-- 2.The format of dat is **data.frame**
+- 2.Process/transform the data (if necessary) into a format suitable for your analysis
+
+
+```r
+class(dat)
+```
+
+```
+## [1] "data.frame"
+```
+
+The format of dat is **data.frame**
 
 ## What is mean total number of steps taken per day?
 
@@ -28,9 +39,28 @@ steps_day <- tapply(dat$steps,dat$date,sum,na.rm=TRUE)
 hist(steps_day, breaks = 20, main = "Histogram of the total number of steps taken each day", xlab = "Total number of steps", ylab = "Number of days")
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-3-1.png)
+![](PA1_template_files/figure-html/unnamed-chunk-4-1.png)
 
-- 3.Of the total number of steps taken per day, the _mean_ is **9354.2295082**
+- 3.Calculate and report the mean and median of the total number of steps taken per day
+
+
+```r
+mean(steps_day)
+```
+
+```
+## [1] 9354.23
+```
+
+
+```r
+median(steps_day)
+```
+
+```
+## [1] 10395
+```
+Of the total number of steps taken per day, the _mean_ is **9354.2295082**
 and the _median_ is **10395**
 
 ## What is the average daily activity pattern?
@@ -44,15 +74,38 @@ steps_interval <- tapply(dat$steps,dat$interval,mean,na.rm=TRUE)
 plot(steps_interval, type = "l", xlab = "Interval", ylab = "Average number of steps")
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-4-1.png)
+![](PA1_template_files/figure-html/unnamed-chunk-7-1.png)
 
-- 2.The No.**104** 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps.
+- 2.Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?
+
+
+```r
+which.max(steps_interval)
+```
+
+```
+## 835 
+## 104
+```
+
+The No.**104** 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps.
 
 ## Imputing missing values
 
 Note that there are a number of days/intervals where there are missing values (coded as 𝙽𝙰). The presence of missing days may introduce bias into some calculations or summaries of the data.
 
-- 1.The _tatal number_ of mission values in the dataset is **2304**
+- 1.Calculate the total number of steps taken per day
+
+
+```r
+sum(is.na(dat$steps))
+```
+
+```
+## [1] 2304
+```
+
+The _tatal number_ of mission values in the dataset is **2304**
 
 - 2.Devise a strategy for filling in all of the missing values in the dataset. The strategy does not need to be sophisticated. For example, you could use the mean/median for that day, or the mean for that 5-minute interval, etc.
 
@@ -76,11 +129,29 @@ steps_day_new <- tapply(dat_new$steps,dat_new$date,sum,na.rm=TRUE)
 hist(steps_day_new, breaks = 20, main = "Histogram of the total number of steps taken each day", xlab = "Total number of steps", ylab = "Number of days")
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-6-1.png)
+![](PA1_template_files/figure-html/unnamed-chunk-11-1.png)
+
+
+```r
+mean(steps_day_new)
+```
+
+```
+## [1] 10766.19
+```
+
+
+```r
+median(steps_day_new)
+```
+
+```
+## [1] 10766.19
+```
 
 Of the total number of steps taken per day, the _mean_ is **1.0766189\times 10^{4}** and the _median_ is **1.0766189\times 10^{4}**.
 
-Obviously, the mean and average total numbers of steps taken per day is **lager** than befor.
+Obviously, the mean and average total numbers of steps taken per day is **a little lager** than befor.
 
 ## Are there differences in activity patterns between weekdays and weekends?
 
@@ -136,5 +207,5 @@ library(lattice)
 xyplot(steps ~ interval | week, data=steps_interval_week, xlab = "Interval", ylab = "Numbers of steps", type="l", layout = c(1,2))
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-8-1.png)
+![](PA1_template_files/figure-html/unnamed-chunk-15-1.png)
 
